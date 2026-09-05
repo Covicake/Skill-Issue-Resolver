@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+import random
+import sys
+
+VERDICTS = [
+    "Skill issue.",
+    "That's a skill issue, unfortunately.",
+    "Diagnosis confirmed: skill issue.",
+    "100% skill issue, 0% lag.",
+    "Have you tried... being better?",
+    "The servers were fine. You were not.",
+    "Certified skill issue.",
+]
+
+EXCUSE_REBUTTALS = {
+    "lag": "the only thing lagging was your aim",
+    "ping": "your ping is fine, your reaction time isn't",
+    "team": "your team can't carry what doesn't hold a W either",
+    "smurf": "a smurf beat you. sit with that",
+    "hack": "no cheater required, you did this yourself",
+    "controller": "the controller isn't the one missing shots",
+    "keyboard": "the keyboard didn't miss the flick, you did",
+    "mouse": "new mouse won't fix old hands",
+    "unlucky": "luck isn't a skill, and neither is this",
+    "disconnect": "you disconnected. from reality. about your skill.",
+}
+
+
+def diagnose(excuse: str) -> str:
+    verdict = random.choice(VERDICTS)
+    excuse_lower = excuse.lower()
+    for keyword, rebuttal in EXCUSE_REBUTTALS.items():
+        if keyword in excuse_lower:
+            return f'{verdict}\nExcuse "{excuse}" rejected: {rebuttal}.'
+    return f'{verdict}\nExcuse "{excuse}" considered and denied.'
+
+
+def main() -> None:
+    excuse = " ".join(sys.argv[1:]).strip()
+    if not excuse:
+        print(random.choice(VERDICTS))
+        return
+    print(diagnose(excuse))
+
+
+if __name__ == "__main__":
+    main()
